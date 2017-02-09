@@ -53,10 +53,6 @@ if __name__ == '__main__':
 
 
 # Задание 3
-# Написать класс Stack, у которого есть два метода push(value) и pop().
-# Если мы пытаемся сделать pop из пустого стека,
-# нужно выбрасывать исключение IndexError.
-# Подробнее про стек: https://ru.wikipedia.org/wiki/LIFO
 
 
 class Stack:
