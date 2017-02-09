@@ -1,148 +1,60 @@
 
-# Задание 1
-# Реализовать класс Person, у которого должно быть два публичных поля: age и name. 
+import math
 
-# Также у него должен быть следующий набор методов: 
-# know(person), который позволяет добавить другого человека в список знакомых. 
-# И метод is_known(person), который возвращает знает ли знакомы ли два человека.
+class Abstract_product(object):
+    volume_descripton = None
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
 
+class Purchase_price_total(object):
+    def product_price_calc(self, name, price, quantity, q_description):
+        if q_description == 'unit(s)' and quantity >= 2:
+            total_price = (price * quantity) * 0.95
+            print(total_price, 'rubles (with 5% discount) for', quantity, q_description, 'of', name)
+        elif q_description == 'kg':
+            rounding = math.modf(quantity)
+            if rounding[0] > 0.5:
+                quantity = rounding[1] + 1
+            else:
+                quantity = rounding[1]
+            total_price = price * quantity
+            print(total_price, 'rubles for', quantity, q_description, '(rounded to 50g) of', name)
+        else:
+            total_price = price * quantity
+            print(total_price, 'rubles for', quantity, q_description, 'of', name) #как убрать пробел между суммой и rubles
+        return total_price
+    
 
-class Person(object):
-	def __init__(self, name, age):
-		self.name = name
-		self.age = age
-		self.contact_list = []
-	
-	def add(self, contact):
-		self.contact_list.append(contact)
-		print('{} has added {}, {} to his contacts.'.format(self.name, contact.name, contact.age))
-		print('Use .contacts() to see full contact list.', '\n')
+class Product_by_weight(Abstract_product):
+    volume_descripton = 'kg'
+    def __init__(self, name, price, weight):
+        super().__init__(name, price)
+        self.weight = weight
+    
 
-	def check(self, contact):
-		if contact in self.contact_list:
-			print('Yes, {} is known to {}.'.format(contact.name, self.name))
-		elif self in contact.contact_list:
-			print('Yes, {} is known to {}.'.format(contact.name, self.name))
-		else:
-			print('No, {} isn\'t known to {}.'.format(contact.name, self.name))
-
-	def contacts(self):
-		print('{}\'s contact list: '.format(self.name))
-		for contact in self.contact_list:
-			print('{}, {} '.format(contact.name, contact.age))
-		print('\n')
-
-person1 = Person('Dima', 38)
-person2 = Person('Oleg', 35)
-person3 = Person('Yulya', 27)
-person4 = Person('Tanya', 30)
-
-person1.add(person2)
-person1.add(person3)
-person1.contacts()
-
-person1.check(person2)
-person2.check(person1)
-person1.check(person4)
+class Product_by_unit(Abstract_product):
+    volume_descripton = 'unit(s)'
+    def __init__(self, name, price, unit):
+        super().__init__(name, price)
+        self.unit = unit
 
 
+class Product_by_volume(Abstract_product):
+    volume_descripton = 'litre'
+    def __init__(self, name, price, volume):
+        super().__init__(name, price)
+        self.volume = volume
+    
+# данные для проврки работы программы
+w1 = Product_by_weight('meat', 200, 2.7)
+purchase_w1 = Purchase_price_total()
+purchase_w1.product_price_calc(w1.name, w1.price, w1.weight, w1.volume_descripton)
 
-# Задание 2
-# Есть класс, который выводи информацию в консоль: `Printer`, у него есть метод: log(*values). 
-# Написать класс FormattedPrinter, который выводит в консоль информацию, окружая ее строками из *
+u1 = Product_by_unit('chips', 55, 2)
+purchase_u1 = Purchase_price_total()
+purchase_u1.product_price_calc(u1.name, u1.price, u1.unit, u1.volume_descripton)
 
-
-class Printer:
-	print('Use .log(text) to print the text', '\n')
-	def log(self, *text):
-		for t in text:
-			print(t)
-
-
-class FormattedPrinter(Printer):
-	print('Use .form_log(text) to print formatted text', '\n')
-	def form_log(self, *text):
-		for t in text:
-			print('\n', len(t) * '*', '\n', t, '\n', len(t) * '*', '\n')
-
-
-my_text = FormattedPrinter()
-
-my_text.log('first log', 'second log')
-
-my_text.form_log('first log', 'second log')
-
-
-
-
-# Задание 3
-# Написать класс Animal и Human, сделать так, 
-# чтобы некоторые животные были опасны для человека (хищники, ядовитые). Другие - нет. 
-# За что будет отвечать метод is_dangerous(animal)
-
-
-
-
-class Animal:
-	danger = False
-	def __init__(self, name):
-		self.name = name
-		pass
-		
-class Wild_Predators(Animal):
-	danger = True
-
-class Venomous(Animal):
-	danger = True
-
-
-class Human:
-
-	def is_dangerous(self, animals):
-		for animal in animals:
-			if animal.danger == True:
-				print('Human, beware of {}, it\'s dangerous!'.format(animal.name))
-			else:
-				print('It\'s OK, {} is not dangerous!'.format(animal.name))
-
-
-
-animal1 = Animal('cat')
-animal2 = Wild_Predators('lion')
-animal3 = Venomous('cobra')
-
-human = Human()
-human.is_dangerous(animals = [animal1, animal2, animal3])
-
-
-
-# Version 2:
-
-class Human:
-	def __init__(self, dangerous_animals):
-		self.dangerous_animals = dangerous_animals
-	
-
-
-class Animal:
-	def __init__(self, animal, animal_class):
-		self.animal = animal
-		self.animal_class = animal_class
-
-	def is_danderous(self, animal_class):
-		if animal_class in human.dangerous_animals:
-			print('Human, beware of {}, it\'s dangerous!'.format(self.animal))
-		else:
-			print('It\'s OK, {} is not dangerous!'.format(self.animal))
-
-
-human = Human(dangerous_animals = ['wild_predator', 'venomous_snake'])
-
-
-animal1 = Animal('lion', 'wild_predator')
-animal2 = Animal('cat', 'pet')
-
-animal1.is_danderous('wild_predator')
-animal2.is_danderous('pet')
-
-
+v1 = Product_by_volume('pepsi', 45, 3)
+purchase_u1 = Purchase_price_total()
+purchase_u1.product_price_calc(v1.name, v1.price, v1.volume, v1.volume_descripton)
