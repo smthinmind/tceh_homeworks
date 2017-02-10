@@ -37,7 +37,8 @@ class Cart:
 
         # Записываем данные продукта в корзину с новым количеством и скидкой:
 
-        self.cart.append([p_id.name, p_id.price, p_id.unit, quantity, discount, p_id_amount])
+        self.cart.append([p_id.name, p_id.price,
+                          p_id.unit, quantity, discount, p_id_amount])
 
         # Пересчитывем итог корзины:
 
@@ -50,9 +51,15 @@ class Cart:
     def check_out(self):
         for i in range(len(self.cart)):
             print('{}'.format(self.cart[i][0]))
-            print('{:.2f} * {:.2f} {}'.format(self.cart[i][1], self.cart[i][3], self.cart[i][2]))
-            print('{:<5} {:<5.1%} {:>15} {:>10.2f}'.format('disc', self.cart[i][4], '=', self.cart[i][5]), '\n')
-        print('{:<25} {} {:>10.2f}'.format('Total amount', '=', self.cart_amount), '\n')
+
+            print('{:.2f} * {:.2f} {}'
+                  .format(self.cart[i][1], self.cart[i][3], self.cart[i][2]))
+
+            print('{:<5} {:<5.1%} {:>15} {:>10.2f}'
+                  .format('disc', self.cart[i][4], '=', self.cart[i][5]), '\n')
+
+        print('{:<25} {} {:>10.2f}'
+              .format('Total amount', '=', self.cart_amount), '\n')
 
 
 if __name__ == '__main__':
