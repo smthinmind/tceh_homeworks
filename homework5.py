@@ -22,7 +22,9 @@ print(not_iter_items)
 
 text = 'The quick brown fox jumps over the lazy dog'
 
-m = [(x.upper(), ''.join([random.choice([y.upper(), y.lower()]) for y in x]), len(x)) for x in text.split()]
+m = [(x.upper(),
+      ''.join([random.choice([y.upper(), y.lower()]) for y in x]),
+      len(x)) for x in text.split()]
 print(m)
 
 
