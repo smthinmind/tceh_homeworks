@@ -14,7 +14,7 @@ class Cart:
 
     # Добавление продуктов в корзину:
 
-    def add(self, p_id, number, discount=0):
+    def add(self, p_id, quantity, discount=0):
 
         # Проверяем, если такой продукт уже в корзине:
         # перезаписываем количество продукта,
@@ -22,22 +22,22 @@ class Cart:
 
         for i in range(len(self.cart)):
             if p_id.name == self.cart[i][0]:
-                number = number + self.cart[i][3]
+                quantity = quantity + self.cart[i][3]
                 self.cart.pop(i)
             else:
                 pass
 
         # Считаем актуальную скидку и итог на продукт:
 
-        if p_id.unit == 'pieces' and number >= 2:
+        if p_id.unit == 'pieces' and quantity >= 2:
             discount = 0.05
-            p_id_amount = round(p_id.price * number * (1 - discount), 2)
+            p_id_amount = round(p_id.price * quantity * (1 - discount), 2)
         else:
-            p_id_amount = p_id.price * number
+            p_id_amount = p_id.price * quantity
 
         # Записываем данные продукта в корзину с новым количеством и скидкой:
 
-        self.cart.append([p_id.name, p_id.price, p_id.unit, number, discount, p_id_amount])
+        self.cart.append([p_id.name, p_id.price, p_id.unit, quantity, discount, p_id_amount])
 
         # Пересчитывем итог корзины:
 
