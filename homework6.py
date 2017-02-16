@@ -5,7 +5,7 @@ from datetime import datetime, date, time, timedelta
 import time
 
 
-# Задание 1:
+# Task 1:
 
 def my_1st_decorator(function):
     def cancell_the_function(*args):
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     one_more_fuction(0, 100)
 
 
-# Задание 2:
+# Task 2:
 
 def function_runtime(function):
     def check_runtime(*args):
@@ -86,14 +86,14 @@ if __name__ == '__main__':
     function_3(0, 20000000)
 
 
-# Задание 3:
+# Task 3:
 
 l = (i for i in range(101) if i % 2 == 0)
 print(l)
 print(list(l))
 
 
-# Задание 4:
+# Task 4:
 
 def asc():
     a = int(input('Start randomizer from: '))
@@ -112,7 +112,7 @@ if __name__ == '__main__':
         print(next(asc_gen))
 
 
-# Задание 5:
+# Task 5:
 
 def day_by_day_from(year, month, day):
     from_date = date(year, month, day)
