@@ -1,5 +1,5 @@
 
-from flask import Flask, request, jsonify, redirect, url_for
+from flask import Flask, request, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators
 
