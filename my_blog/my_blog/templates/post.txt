@@ -1,0 +1,12 @@
+<h1> {{ post.title }} </h1>
+
+<p>
+    {{ post.user.username }},
+    {{ post.date_created }}
+</p>
+
+<p>
+    {{ post.content }}
+</p>
+
+
