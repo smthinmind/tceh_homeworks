@@ -1,5 +1,5 @@
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators
 
@@ -73,16 +73,11 @@ def sign_up():
 
 @app.route('/serve/<path:filename>')
 def read_file(filename):
-    if os.path.exists('/' + filename):
-        try:
-            file = open('/' + filename)
-            content = file.read()
-            file.close()
-            return content
-        except:
-            return 'Can\'t be read - .txt extension required'
+    if os.path.exists(os.path.join('./files', filename)):
+        with open(os.path.join('./files', filename), 'r') as file:
+            return file.read()
     else:
-        return '404 - File not found'
+        return abort(404)
 
 
 if __name__ == '__main__':
