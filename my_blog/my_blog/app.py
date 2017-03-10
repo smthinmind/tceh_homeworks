@@ -1,46 +1,28 @@
 
-from flask import Flask, request, render_template, flash
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+from my_blog.views import views, admin
+from my_blog.database import db
 
-import my_blog.config as config
+def create_app():
+    app = Flask(__name__, template_folder='templates')
+    app.config.update({
+        'DEBUG': True,
+        'SECRET_KEY': 'My secret key',
+        'WTF_CSRF_ENABLED': False,
+        # Database settings:
+        'SQLALCHEMY_DATABASE_URI': 'sqlite:///blog.db',
+        'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+    })
 
+    app.register_blueprint(views)
+    app.register_blueprint(admin)
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
 
-app = Flask(__name__, template_folder='templates')
-app.config.from_object(config)
+    return app
 
-# http://flask-sqlalchemy.pocoo.org/2.1/quickstart/#a-minimal-application
-db = SQLAlchemy(app)
-
-
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    from my_blog.models import Post
-    from my_blog.forms import PostForm
-
-    if request.method == 'POST':
-        print(request.form)
-        form = PostForm(request.form)
-
-        if form.validate():
-            post = Post(**form.data)
-            db.session.add(post)
-            db.session.commit()
-            flash('Post created!')
-        else:
-            flash('Form is not valid! Post was not created.')
-            flash(str(form.errors))
-
-    posts = Post.query.order_by(Post.date_created.desc()).all()
-    return render_template('home.txt', posts=posts)
-
-
-@app.route('/<string:post_slug>/', methods=['GET', ])
-def post(post_slug):
-    post = Post.query.filter_by(slug=post_slug).first()
-    return render_template('post.txt', post=post)
 
 if __name__ == '__main__':
-    from my_blog.models import *
-    db.create_all()
-
+    app = create_app()
     app.run()

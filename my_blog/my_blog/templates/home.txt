@@ -13,14 +13,17 @@
 Посты в блоге:
 <div>
 {% for item in posts %}
-<p>
-    Заголовок: {{ item.title }}
-    Дата: {{ item.date_created }}
-    Автор: {{ item.user.username }}
-    Теги: {{ item.tags }}
-    Текст: {{ item.content }}
-    {{item.slug}}
-</p>
+<div>
+    <h1> {{ item.title }} </h1>
+    <p>
+        Дата: {{ item.date_created }}
+        Автор: {{ item.user.username }}
+    <br/>
+        Теги: {{ item.tags.id }}
+    </p>
+    <p>
+        {{ item.content }}
+    </p>
 {% endfor %}
 </div>
 Конец постов
