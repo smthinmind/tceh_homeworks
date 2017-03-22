@@ -26,12 +26,14 @@ def index():
             flash(str(form.errors))
 
     posts = Post.query.order_by(Post.date_created.desc()).all()
+    print(posts)
     return render_template('home.txt', posts=posts)
 
 
 @views.route('/<string:post_slug>/', methods=['GET', ])
 def post(post_slug):
     post = Post.query.filter_by(slug=post_slug).first()
+    print(post, post_slug)
     return render_template('post.txt', post=post)
 
 

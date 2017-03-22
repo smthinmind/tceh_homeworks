@@ -48,7 +48,7 @@ class Post(db.Model):
         self.date_created = date_created
         self.content = content
         self.is_visible = is_visible
-        self.slug = slugify('-'.join([title,]))
+        self.slug = slugify(title)
 
     def __str__(self):
         return '<Post %r>' % self.title
