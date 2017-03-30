@@ -1,0 +1,40 @@
+{% extends "my_templates/_base.html" %}
+
+{% block content %}
+
+<div class="content">
+    {% if messages %}
+        <p class="messages">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    <form action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+
+    <div class="posts">
+        {% for item in items %}
+            <div class="post">
+                <h3 class="post-title">
+                    {{ item.title }}
+                </h3>
+
+                <h4>{{ item.author }}</h4>
+                <h5>{{ item.time_stamp }}</h5>
+
+                <div class="post-text">
+                    {{ item.text }}
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
