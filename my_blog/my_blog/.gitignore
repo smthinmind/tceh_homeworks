@@ -102,6 +102,10 @@ docs/_build/
 # PyBuilder
 target/
 
+# IntellijIdea files
+*.iml
+.idea
+
 #####=== Sass ===#####
 
 .sass-cache

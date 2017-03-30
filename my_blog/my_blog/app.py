@@ -3,6 +3,7 @@ from flask import Flask
 from my_blog.views import views, admin
 from my_blog.database import db
 
+
 def create_app():
     app = Flask(__name__, template_folder='templates')
     app.config.update({

@@ -11,9 +11,11 @@ from my_blog.database import db
 
 
 post_tags = db.Table('post_tags',
-    db.Column('post_id', db.Integer, db.ForeignKey('post.id'), primary_key=True),
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True)
-)
+                     db.Column('post_id', db.Integer,
+                               db.ForeignKey('post.id'), primary_key=True),
+                     db.Column('tag_id', db.Integer,
+                               db.ForeignKey('tag.id'), primary_key=True)
+                     )
 
 
 class User(db.Model):
@@ -40,9 +42,11 @@ class Post(db.Model):
     content = db.Column(db.String(10000), nullable=False)
     is_visible = db.Column(db.Boolean, default=True)
 
-    tags = db.relationship('Tag', secondary=post_tags, backref=db.backref('post', lazy="dynamic"))
+    tags = db.relationship('Tag', secondary=post_tags,
+                           backref=db.backref('post', lazy="dynamic"))
 
-    def __init__(self, user_id, title, date_created, content, is_visible, slug):
+    def __init__(self, user_id, title, date_created,
+                 content, is_visible, slug):
         self.user_id = user_id
         self.title = title
         self.date_created = date_created
@@ -60,7 +64,8 @@ class Tag(db.Model):
 
     tagname = db.Column(db.String(50), unique=True, nullable=False)
 
-    posts = db.relationship('Post', secondary=post_tags, backref=db.backref('tag', lazy="dynamic"))
+    posts = db.relationship('Post', secondary=post_tags,
+                            backref=db.backref('tag', lazy="dynamic"))
 
     def __str__(self):
         return '<Tag %r>' % self.tagname
